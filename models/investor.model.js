@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
-const farmerSchema = new mongoose.Schema({
+const investorSchema = new mongoose.Schema({
     first_name: {
         type: String,
         required: true,
@@ -39,7 +39,7 @@ const farmerSchema = new mongoose.Schema({
     timestamps: true
 }); 
 
-farmerSchema.methods .generateToken = async function(){
+investorSchema.methods .generateToken = async function(){
      const authToken = jwt.sign({ _id: this._id.toString()}, process.env.TOKEN_SECRET,{
         expiresIn: 30*24*60*60*1000,
       });
@@ -48,4 +48,4 @@ farmerSchema.methods .generateToken = async function(){
       return authToken
 }
 
-module.exports = mongoose.model('Farmer', farmerSchema);   
+module.exports = mongoose.model('Investor', investorSchema);   
