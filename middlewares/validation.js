@@ -4,8 +4,8 @@ const Joi = require("joi");
 //Register validation
 const registerValidation = data =>{
     const schema = {
-        first_name: Joi.string().required(),
-        last_name: Joi.string().required(),
+        role: Joi.string().required(),
+        fullname: Joi.string().required(),
         phoneNumber: Joi.string().max(9).required(),
         email: Joi.string().required().email(),
         password: Joi.string().required()

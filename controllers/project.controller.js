@@ -19,19 +19,31 @@ const getProject = asyncHandler(async (req,res) =>{
 
 //Create new Project
 const createProject = asyncHandler(async (req,res) =>{
-    console.log('the request body is :', req.body);
-    const {surface, budget, cultureType, duration} = req.body;
+    
+    let files = [];
+    const {farmer, surface, budget, cultureType, duration} = req.body;
     if(!surface || !budget || !cultureType || !duration){
         res.status(400);
         throw new Error('All fields are madatory')
     }
-    const project = await Project.create({
-        surface, 
-        budget,
-        cultureType, 
-        duration
-    });
-    res.status(201).json(project);
+    try{
+        if(req.files){
+            req.files.forEach(file => {
+                files.push(`files/${file}`)
+            });
+        }
+        const project = await Project.create({
+            farmer: req.farmer._id,
+            surface, 
+            budget,
+            cultureType, 
+            duration,
+            files: files
+        });
+        res.status(201).json(project);
+    }catch(error){
+
+    }
 });
 
 //Update Project

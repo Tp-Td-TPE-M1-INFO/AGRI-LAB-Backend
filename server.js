@@ -10,9 +10,14 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(__dirname +'/public'));
 
-app.use('/api', require('./routes/farmer.routes'));
-app.use('/api', require('./routes/investor.routes'));
-app.use('/api', require('./routes/project.routes'));
+app.get('/', (req, res)=>{
+    res.send("api is running")
+})
+
+app.use('/api/farmer', require('./routes/farmer.routes'));
+app.use('/api/investor', require('./routes/investor.routes'));
+app.use('/api/project', require('./routes/project.routes'));
+app.use('/api', require('./routes/auth.routes'));
 
 const port = process.env.PORT;
 app.listen(port, ()=>{
