@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 
 const investorSchema = new mongoose.Schema({
     fullname: {
@@ -10,7 +9,7 @@ const investorSchema = new mongoose.Schema({
     phoneNumber: {
         type : String,
     },
-
+    
     email: {
         type: String,
         required: true,
@@ -35,4 +34,4 @@ const investorSchema = new mongoose.Schema({
     timestamps: true
 }); 
 
-module.exports = mongoose.model('Investor', investorSchema);   
+module.exports = mongoose.model('Investor', investorSchema);

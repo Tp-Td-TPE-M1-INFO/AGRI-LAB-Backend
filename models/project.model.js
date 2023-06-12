@@ -1,10 +1,20 @@
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 
 const projectSchema = new mongoose.Schema({
+
     farmer: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "Farmer",
         required: true
+    },
+
+    title:{
+        type: String,
+        required: true
+    },
+
+    description:{
+        type: String,
     },
     surface: {
         type: Number,
@@ -18,10 +28,15 @@ const projectSchema = new mongoose.Schema({
         type : String,
         required: true
     },
+    technic:{
+        type: String,
+        required: true
+    },
     duration: {
         type: String,
         required: true
     },
+
     files:{
         type: [String],
     }

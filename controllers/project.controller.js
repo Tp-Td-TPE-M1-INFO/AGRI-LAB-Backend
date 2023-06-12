@@ -9,7 +9,8 @@ const getProjects = asyncHandler(async (req,res) =>{
 
 //Get one Project
 const getProject = asyncHandler(async (req,res) =>{
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findById(req.params.id)
+    
     if(!project){
         res.status(404);
         throw new Error('Project not found');
@@ -18,58 +19,75 @@ const getProject = asyncHandler(async (req,res) =>{
 });
 
 //Create new Project
-const createProject = asyncHandler(async (req,res) =>{
+const createProject = (async (req,res) =>{
     
     let files = [];
-    const {farmer, surface, budget, cultureType, duration} = req.body;
-    if(!surface || !budget || !cultureType || !duration){
-        res.status(400);
-        throw new Error('All fields are madatory')
-    }
+    const {farmer, title, description, surface, budget, cultureType, technic, duration} = req.body;
+   
     try{
         if(req.files){
             req.files.forEach(file => {
-                files.push(`files/${file}`)
+                files.push(`projects/${file.filename}`)
             });
         }
         const project = await Project.create({
-            farmer: req.farmer._id,
+            farmer,
+            title,
+            description,
             surface, 
             budget,
+            technic,
             cultureType, 
             duration,
             files: files
         });
         res.status(201).json(project);
     }catch(error){
-
+        res.status(400).json(error.message)
     }
 });
 
 //Update Project
-const updateProject = asyncHandler(async (req,res) =>{
-    const project = await Project.findById(req.params.id);
-    if(!project){
-        res.status(404);
-        throw new Error('Project not found');
-    };
-    const updatedProject = await Project.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        {new: true}
-    );
-    res.status(200).json(updatedProject);
+const updateProject = (async (req,res) =>{
+    let files = [];
+    const {farmer, title, description, surface, budget, cultureType, technic, duration} = req.body;
+   
+    try{
+        if(req.files){
+            req.files.forEach(file => {
+                files.push(`projects/${file.filename}`)
+            });
+        }
+        const project = await Project.findByIdAndUpdate(
+            req.params.id,
+            {
+                farmer,
+                title,
+                description,
+                surface, 
+                budget,
+                technic,
+                cultureType, 
+                duration,
+                files: files
+            },
+            {new: true}
+        );
+        res.status(201).json(project);
+    }catch(error){
+        res.status(400).json(error.message)
+    }
 });
 
 //delete Project
-const deleteProject = asyncHandler(async (req,res) =>{
-    const project = await Project.findById(req.params.id);
-    if(!project){
-        res.status(404);
-        throw new Error('Project not found');
-    };
-    await Project.deleteOne();
-    res.status(200).json(project);
+const deleteProject = (async (req,res) =>{
+    try{
+        await Project.deleteOne({_id: req.params.id});
+        res.status(200).json({message: "project deleted"})
+    }
+    catch(error){
+        res.status(400).send(error.message);
+    }
 });
 
 module.exports = {getProjects, createProject, getProject, updateProject, deleteProject}

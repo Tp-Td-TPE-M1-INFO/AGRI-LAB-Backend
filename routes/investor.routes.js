@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {getInvestor, updateInvestor, deleteInvestor, getAllInvestors, profil, deleteProfil } = require('../controllers/investor.controller');
-const {protect} = require('../middlewares/investorAuth');
+const {protect} = require('../middlewares/protect');
 const upload = require('../middlewares/profil');
 
 router.get('/info/:id', getInvestor)
