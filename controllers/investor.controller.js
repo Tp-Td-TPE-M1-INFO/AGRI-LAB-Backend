@@ -1,12 +1,13 @@
 const Investor = require('../models/investor.model');
-const errorCtr = require('../utils/error.utils');
-   
+
+//Check if the registration number is already in the database
 
 const getInvestor = (async (req, res) =>{
     try{
-        nvestor = await Investor.findById(req.params.id).select('-password')
-        res.status(200).json(nvestor);
+        const investor = await Investor.findById(req.params.id).select('-password')
+        res.status(200).json(investor);
     }
+
     catch(err){
         res.status(400).send(err);
     }
@@ -14,13 +15,12 @@ const getInvestor = (async (req, res) =>{
 
 const updateInvestor = (async (req, res) =>{
 
-    const {first_name, last_name, email, phoneNumber} = req.body
+    const {fullname, email, phoneNumber} = req.body
     try{
         const updateInvestor = await Investor.findByIdAndUpdate(
-            req.Investor._id,
+            req.params.id,
             {
-                last_name: last_name,
-                first_name: first_name,
+                fullname: fullname,
                 email: email,
                 phoneNumber: phoneNumber
             },
@@ -36,9 +36,9 @@ const updateInvestor = (async (req, res) =>{
 const deleteInvestor = (async (req, res) =>{
     
     try{
-
-        await Investor.deleteOne(req.investor._id);
-        res.status(200).json({message: "Investor deleted"});
+        
+        await Investor.deleteOne(req.params.id);
+        res.status(200).json({message: "investor deleted"});
     }
     catch(err){
         res.status(400).json({ message: err});
@@ -47,7 +47,7 @@ const deleteInvestor = (async (req, res) =>{
 
 const getAllInvestors = (async (req, res)=>{
     try{
-        investors = await Investor.find();
+        const investors = await Investor.find();
         res.status(200).json(investors);
     }
     catch(err){
@@ -64,21 +64,24 @@ const profil = (async (req, res)=>{
             {avatar : profil},
             {new: true}
         );
-        res.status(200).send("image uploaded")
+        res.status(200).send({
+            avatar: profil
+        })
     } 
     catch(err){
         console.log(err)
         res.status(400).send(err)
     }
-})
+});
+
 const deleteProfil = (async (req, res) =>{
     try{
-        await Investor.findByIdAndUpdate(
+        const investor = await Investor.findByIdAndUpdate(
             req.params.id,
             {avatar: 'profil/profil.jpg'},
             {new: true}
         );
-        res.status(200).json({message : 'delete succes'})
+        res.status(200).json({avatar: investor.avatar})
     }
     catch(err){
         res.statut(400).send(err)

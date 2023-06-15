@@ -16,10 +16,9 @@ const updateFarmer = (async (req, res) =>{
     const {fullname, email, phoneNumber} = req.body
     try{
         const updateFarmer = await Farmer.findByIdAndUpdate(
-            req.Farmer._id,
+            req.params.id,
             {
-                last_name: last_name,
-                first_name: first_name,
+                fullname: fullname,
                 email: email,
                 phoneNumber: phoneNumber
             },
@@ -35,8 +34,8 @@ const updateFarmer = (async (req, res) =>{
 const deleteFarmer = (async (req, res) =>{
     
     try{
-
-        await Farmer.deleteOne(req.farmer._id);
+        
+        await Farmer.deleteOne(req.params.id);
         res.status(200).json({message: "Farmer deleted"});
     }
     catch(err){
@@ -46,7 +45,7 @@ const deleteFarmer = (async (req, res) =>{
 
 const getAllFarmers = (async (req, res)=>{
     try{
-        farmers = await Farmer.find();
+        const farmers = await Farmer.find();
         res.status(200).json(farmers);
     }
     catch(err){
@@ -71,7 +70,8 @@ const profil = (async (req, res)=>{
         console.log(err)
         res.status(400).send(err)
     }
-})
+});
+
 const deleteProfil = (async (req, res) =>{
     try{
         const farmer = await Farmer.findByIdAndUpdate(
