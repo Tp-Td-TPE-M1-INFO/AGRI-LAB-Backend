@@ -22,10 +22,13 @@ const getDocuments = (async (req, res) =>{
 
 const createDocument = (async (req, res)=>{
 
-    const {admin, }
+    const {admin, title, description, document} = req.body
     try{
         const newDocument = await Document.create({
 
         })
+    }
+    catch(err){
+
     }
 })
