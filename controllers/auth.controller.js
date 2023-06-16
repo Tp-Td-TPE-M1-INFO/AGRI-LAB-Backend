@@ -70,13 +70,11 @@ const login = (async (req, res) =>{
     const farmer = await Farmer.findOne({email});
     if(farmer)
     {
-        if(!farmer) return res.status(400).send('Invalid email or password');
-        //check if the password is correct
         const validPass = await bcrypt.compare(password, farmer.password);
         if(!validPass) return res.status(400).send('Invalid email or password');
             
         //Create and asign a token
-        const token = await farmer.generateToken(farmer._id.toString());
+        const token = generateToken(farmer._id.toString());
     
         res.status(200).json({
             fullname : farmer.first_name,
