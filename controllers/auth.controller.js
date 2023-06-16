@@ -24,6 +24,7 @@ const register = (async (req, res)=>{
                 password: hashedPassword
             });
             res.status(201).json({
+                _id: farmer._id,
                 fullname : farmer.fullname,
                 phoneNumber: farmer.phoneNumber,
                 email : farmer.email,
@@ -47,6 +48,7 @@ const register = (async (req, res)=>{
                 password: hashedPassword
             });
             res.status(201).json({
+                _id: investor._id,
                 fullname : investor.fullname,
                 phoneNumber: investor.phoneNumber,
                 email : investor.email,
@@ -77,7 +79,8 @@ const login = (async (req, res) =>{
         const token = generateToken(farmer._id.toString());
     
         res.status(200).json({
-            fullname : farmer.first_name,
+            _id: farmer._id,
+            fullname : farmer.fullname,
             role : farmer.role,
             phoneNumber: farmer.phoneNumber,
             email : farmer.email,
@@ -100,8 +103,8 @@ const login = (async (req, res) =>{
         const token = generateToken(investor._id.toString());
     
         res.status(200).json({
-            first_name : investor.first_name,
-            last_name: investor.last_name,
+            _id: investor._id,
+            fullname : investor.fullname,
             phoneNumber: investor.phoneNumber,
             email : investor.email,
             avatar : investor.avatar,
