@@ -13,7 +13,7 @@ const getDocument = (async function(req, res){
 const getDocuments = (async (req, res) =>{
     try{
         const documents = await Document.find();
-        res.status.json(documents)
+        res.status(200).json(documents)
     }
     catch(err){
         res.status(400).json(err.message)
