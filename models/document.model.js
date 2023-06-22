@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
 
 const DocSchema = mongoose.Schema({
-    admin: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Admin",
+    author: {
+        type: String,
         required: true
     },
     title: {
         type: String,
         required: true,
-        unique : true
+    },
+    category:{
+        type: String,
+        require: true
     },
     description:{
         type: String

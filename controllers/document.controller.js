@@ -22,13 +22,23 @@ const getDocuments = (async (req, res) =>{
 
 const createDocument = (async (req, res)=>{
 
-    const {admin, title, description, document} = req.body
+    let document = "";
+    const {author, title, description, category} = req.body;
+    if(req.file) document = `documents/${req.file.filename}`;
+    
     try{
         const newDocument = await Document.create({
-
-        })
+            author,
+            title,
+            description,
+            category,
+            document: document
+        });
+        res.status(201).json(newDocument)
     }
     catch(err){
-
+        res.status(400).json(err)
     }
 })
+
+module.exports = {getDocument, getDocuments, createDocument}
