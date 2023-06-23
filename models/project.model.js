@@ -40,8 +40,9 @@ const projectSchema = new mongoose.Schema({
     files:{
         type: [String],
     },
-    investement :[{
+    investment :[{
         type:mongoose.Schema.Types.ObjectId,
+        ref : "Investment"
     }]
 },
 {

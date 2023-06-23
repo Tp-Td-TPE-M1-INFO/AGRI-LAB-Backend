@@ -5,18 +5,18 @@ const createInvestment = (async (req, res) =>{
 
     const {investor, project, money, description } = req.body;
     try{
-        const investement = await Investment.create({
+        const investment = await Investment.create({
             investor,
             project,
             money,
             description
         });
-        console.log(investement)
+        
         const updateProject = await Project.findByIdAndUpdate(
             project,
             {
                 $push:{
-                   investement: investement._id 
+                   investment: investment._id 
                 }
             }
         );
