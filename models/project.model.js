@@ -25,21 +25,24 @@ const projectSchema = new mongoose.Schema({
         required: true,
     },
     cultureType: {
-        type : String,
+        type : Number,
         required: true
     },
     technic:{
-        type: String,
+        type: Number,
         required: true
     },
     duration: {
-        type: String,
+        type: Number,
         required: true
     },
 
     files:{
         type: [String],
-    }
+    },
+    investement :[{
+        type:mongoose.Schema.Types.ObjectId,
+    }]
 },
 {
     timestamps: true

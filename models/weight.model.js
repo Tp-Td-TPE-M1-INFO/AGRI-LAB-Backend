@@ -3,17 +3,17 @@ const mongoose = require('mongoose')
 const weightSchema = mongoose.Schema({
 
     recommander:[{
-        project:
-        [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Project'
-        }],
         investor:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Investor',
             required: true
         },
-        weight:[{
+        project:
+        [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Project'
+        }],
+        criteriaWeights:[{
            type: Number
         }]
     }]

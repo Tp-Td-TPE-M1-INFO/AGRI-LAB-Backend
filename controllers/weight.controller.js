@@ -102,16 +102,21 @@ const CreateWeight = (async (req, res) =>{
     let cr1 = cr(ci1);
 
     if(cr1 < 0.1){
+        let weights = [];
+        const projects = await Project.find();
+        const n = projects.length;
+        let total = 0;
+        for(let i =0; i<n; i++)
+        {
+            total = (projects[i].surface * criteria[i]) + (projects[i].budget * criteria[i]) + (projects[i].cultureType * criteria[i]) + (projects[i].duration * criteria[i]);
+            weights.push(total);
+        }
         try{
-            let weights = [];
-            const projects = await Project.find();
-            const n = projects.length;
-            let total = 0;
-            for(let i =0; i<n; i++)
-            {
-                total = (projects[i].surface * criteria[i]) + (projects[i].budget * criteria[i]) + (projects[i].cultureType * criteria[i]) + (projects[i].duration * criteria[i]);
-                weights.push(total);
-            }
+            const weight = await Weight.create({
+                investor: req.body.investor,
+                projects: projects,
+                criteriaWeights: weights
+            }) 
         }
         catch(err){
 

@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.static(__dirname +'/public'));
 
 app.get('/', (req, res)=>{
-    res.send("api is running")
+    res.send("api is running");
 })
 
 app.use('/api/farmer', require('./routes/farmer.routes'));
@@ -22,6 +22,7 @@ app.use('/api/investor', require('./routes/investor.routes'));
 app.use('/api/project', require('./routes/project.routes'));
 app.use('/api/document', require('./routes/document.routes'));
 app.use('/api', require('./routes/auth.routes'));
+app.use('/api/investment', require('./routes/investment.routes'));
 
 //swagger
 const options = {

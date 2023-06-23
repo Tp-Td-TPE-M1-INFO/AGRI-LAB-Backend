@@ -10,6 +10,7 @@ const getProjects = asyncHandler(async (req,res) =>{
 //Get one Project
 const getProject = asyncHandler(async (req,res) =>{
     const project = await Project.findById(req.params.id)
+    .populate("Investment");
     
     if(!project){
         res.status(404);
